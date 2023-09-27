@@ -310,4 +310,51 @@ public class UserDetailsController extends BaseController {
 		return responseEntity;
 
 	}
+	
+	
+	@PostMapping(value = UrlConstants.DELETE_USER_BY_Id)
+	public ResponseEntity<APIResponse> deleteUserByUserId(@PathVariable(name = "userId") String userId) {
+
+		final UserDetails userDetailsResponse;
+		final APIResponse response = new APIResponse();
+		ResponseEntity<APIResponse> responseEntity = null;
+		final Map<String, Object> map = new HashMap<>();
+
+		try {
+
+			if (null != userId) {
+
+				userDetailsResponse = serviceRegistry.getUserDetailsService().getUserDetailsByUserId(userId);
+
+				if (null != userDetailsResponse && null != userDetailsResponse.getUserId()) {
+					
+					serviceRegistry.getUserDetailsService().deleteUser(userId);
+					response.setResponseMessage(new LinkedHashSet<>(Arrays.asList(messageSource
+							.getMessage(MessagePropertyKeyEnum.DATA_DELETED_SUCCESSFULLY_MESSAGE.getKey(), null, null))));
+					response.setStatus(ResponseStatusEnum.SUCCESS.status());
+					response.setResponseData(map);
+					responseEntity = new ResponseEntity<>(response, null, HttpStatus.OK);
+				} else {
+					response.setStatus(ResponseStatusEnum.FAILED.status());
+					response.setErrorMessage(new LinkedHashSet<>(Arrays.asList(messageSource
+							.getMessage(MessagePropertyKeyEnum.DATA_NOT_FOUND_ERROR_MESSAGE.getKey(), null, null))));
+					responseEntity = new ResponseEntity<>(response, null, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			} else {
+				response.setStatus(ResponseStatusEnum.FAILED.status());
+				response.setErrorMessage(new LinkedHashSet<>(Arrays.asList(messageSource
+						.getMessage(MessagePropertyKeyEnum.COMMON_BAD_REQUEST_ERROR_MESSAGE.getKey(), null, null))));
+				responseEntity = new ResponseEntity<>(response, null, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+		} catch (final Exception exception) {
+
+			response.setStatus(ResponseStatusEnum.FAILED.status());
+			response.setErrorMessage(new LinkedHashSet<>(Arrays.asList(
+					messageSource.getMessage(MessagePropertyKeyEnum.COMMON_ERROR_MESSAGE.getKey(), null, null))));
+			responseEntity = new ResponseEntity<>(response, null, HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
+
+	}
 }

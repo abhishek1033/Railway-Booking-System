@@ -14,4 +14,6 @@ public interface UserDetailsService {
 
 	UserDetails updateUser(UserDetails oldDetails, UserDetails newDetails);
 
+	void deleteUser(String userId);
+
 }

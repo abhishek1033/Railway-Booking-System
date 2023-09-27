@@ -10,6 +10,8 @@ public class APIResponse {
 	private String status;
 
 	private Set<String> errorMessage;
+	
+	private Set<String> responseMessage;
 
 	private Map<String, Object> responseData;
 
@@ -42,6 +44,15 @@ public class APIResponse {
 	public void setResponseData(Map<String, Object> responseData) {
 		this.responseData = responseData;
 	}
+
+	public Set<String> getResponseMessage() {
+		return responseMessage;
+	}
+
+	public void setResponseMessage(Set<String> responseMessage) {
+		this.responseMessage = responseMessage;
+	}
+	
 	
 	
 }

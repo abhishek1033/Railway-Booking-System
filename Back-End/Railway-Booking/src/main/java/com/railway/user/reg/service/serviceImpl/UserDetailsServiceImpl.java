@@ -75,6 +75,11 @@ public class UserDetailsServiceImpl extends RepositoryRegistry implements UserDe
 		return oldDetails;
 	}
 
+	@Override
+	public void deleteUser(String userId) {
+		getUserDetailsRepository().deleteUserByUserId(userId);
+	}
+
 	
 
 	

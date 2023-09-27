@@ -26,7 +26,8 @@ public enum MessagePropertyKeyEnum {
 	CITY_NULL_MESSAGE("city.null.message"), 
 	COMMON_ERROR_MESSAGE("common.Error.Message"),
 	COMMON_BAD_REQUEST_ERROR_MESSAGE("common.BadRequest.Error.Message"), 
-	DATA_NOT_FOUND_ERROR_MESSAGE("data.not.found");
+	DATA_NOT_FOUND_ERROR_MESSAGE("data.not.found"), 
+	DATA_DELETED_SUCCESSFULLY_MESSAGE("data.deleted.successfully.message");
 	
 	MessagePropertyKeyEnum(final String key) {
 		this.key = key;
