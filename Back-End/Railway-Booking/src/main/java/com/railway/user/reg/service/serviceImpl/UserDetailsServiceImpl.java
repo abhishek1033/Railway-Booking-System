@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.railway.user.reg.service.entity.UserDetails;
@@ -13,10 +15,14 @@ import com.railway.user.reg.service.util.RepositoryRegistry;
 @Service
 public class UserDetailsServiceImpl extends RepositoryRegistry implements UserDetailsService{
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	@Override
 	public UserDetails addNewUser(UserDetails user) 
 	{
 		user.setUserId(UUID.randomUUID().toString().replace("-", "").substring(0, 8));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setCreatedAt(new Date());
 		user.setCreatedBy("admin");
 		user.setStatus("pending");
